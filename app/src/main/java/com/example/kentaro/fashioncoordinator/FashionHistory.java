@@ -15,8 +15,9 @@ public class FashionHistory extends Activity {
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.fashion_history);
-        //
-        Button buttonScan = (Button)findViewById(R.id.button_back);
+
+        // ƒ{ƒ^ƒ“’è‹`
+        Button buttonScan = (Button)findViewById(R.id.button_history_back);
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

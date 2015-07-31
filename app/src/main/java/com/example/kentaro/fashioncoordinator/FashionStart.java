@@ -16,9 +16,11 @@ public class FashionStart extends Activity {
         super.onCreate(saveIntanceState);
         setContentView(R.layout.fashion_start);
 
-        Button buttonScan = (Button) findViewById(R.id.button_scan);
-        Button buttonHistory = (Button) findViewById(R.id.button_history);
+        Button buttonScan = (Button) findViewById(R.id.button_start_scan);
+        Button buttonHistory = (Button) findViewById(R.id.button_start_history);
+        Button buttonHome = (Button)findViewById(R.id.button_start_home);
 
+        // Scanボタンが押されたときの処理
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,17 +32,25 @@ public class FashionStart extends Activity {
             }
         });
 
+        // Historyボタンが押されたときの処理
         buttonHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 遷移先の画面を指定する
                 Intent intentHistory = new Intent(getApplication(), FashionHistory.class);
 
-                // Scan画面に遷移する
+                // History画面に遷移する
                 startActivity(intentHistory);
             }
         });
 
+        // Homeボタンが押されたときの処理
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 何もしない
+            }
+        });
 
     }
 }

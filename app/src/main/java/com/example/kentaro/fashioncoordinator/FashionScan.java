@@ -15,17 +15,33 @@ public class FashionScan extends Activity {
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.fashion_scan);
-        //
-        Button buttonScan = (Button)findViewById(R.id.button_back);
-        buttonScan.setOnClickListener(new View.OnClickListener() {
+
+        // ボタンの定義
+        Button buttonOK = (Button)findViewById(R.id.button_scan_ok);
+        Button buttonHome = (Button)findViewById(R.id.button_scan_home);
+
+        // OKボタンが押されたときの処理
+        buttonOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentSelect = new Intent(getApplication(), FashionSelect.class);
+                // Select画面に遷移する
+                startActivity(intentSelect);
+
+            }
+        });
+
+        // Homeボタンが押されたときの処理
+        buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentStart = new Intent(getApplication(), FashionStart.class);
-
+                // Start画面に遷移する
                 startActivity(intentStart);
 
             }
         });
+
     }
 
 }
