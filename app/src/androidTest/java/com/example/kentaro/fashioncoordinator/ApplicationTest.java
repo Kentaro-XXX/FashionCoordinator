@@ -2,7 +2,7 @@ package com.example.kentaro.fashioncoordinator;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
-//naka test br
+//naka test br test br
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
