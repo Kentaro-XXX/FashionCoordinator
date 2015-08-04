@@ -29,5 +29,4 @@ proguard/
 # Android Studio
 *.iml
 .idea
-.idea/workspace.xml
 
