@@ -37,13 +37,6 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
     static final String CREATE_HISTORY_TABLE =
             "create table " + HISTORY_TABLE_NAME + " (_date text, _topsId integer, _bottomsId integer );";
 
-    // history table class
-    public class FashionHistory {
-        String date;    // YYYY/MM/DD
-        String topsDataPath;
-        String bottomsDataPath;
-    }
-
     // Drop tables
     static final String DROP_TOPS_IMAGE_TABLE =
             "drop table createTopsImageTable";
@@ -102,7 +95,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public String getTopsImagePathById(SQLiteDatabase db, int id){
+    static public String getTopsImagePathById(SQLiteDatabase db, int id){
         final String SELECT_IMAGE_PATH_FROM_TOPS_IMAGE_TABLE =
                 "select _imgData from " + TOPS_IMAGE_TABLE_NAME + "where _id = \"" + Integer.toString(id) + "\"";
 
@@ -130,28 +123,28 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
         }
         return path;
     }
-    public FashionHistory getFashionHistory(SQLiteDatabase db, String date){
+    public FashionHistoryData getFashionHistoryData(SQLiteDatabase db, String date){
         final String SELECT_IMAGE_IDS_FROM_HISTORY_TABLE =
                 "select _topsId, _bottomsId from " + HISTORY_TABLE_NAME + "where _date = \"" + date + "\"";
 
         // Get fashion IDs by date
         Cursor mCursor = db.rawQuery(SELECT_IMAGE_IDS_FROM_HISTORY_TABLE, null);
 
-        FashionHistory mFashionHistory = new FashionHistory();
-        mFashionHistory.date = date;
+        FashionHistoryData mFashionHistoryData = new FashionHistoryData();
+        mFashionHistoryData.date = date;
         if(mCursor.moveToFirst()){
             // Get tops ID
             int topsId = mCursor.getInt(mCursor.getColumnIndex("_topsId"));
             // Get tops image data path
-            mFashionHistory.topsDataPath = getTopsImagePathById(db, topsId);
+            mFashionHistoryData.topsDataPath = getTopsImagePathById(db, topsId);
 
             // Get bottoms ID
             int bottomsId = mCursor.getInt(mCursor.getColumnIndex("_bottomsId"));
             // Get bottoms image data path
-            mFashionHistory.bottomsDataPath = getBottomsImagePathById(db, bottomsId);
+            mFashionHistoryData.bottomsDataPath = getBottomsImagePathById(db, bottomsId);
         }
 
-        return mFashionHistory;
+        return mFashionHistoryData;
     }
 
     ///////////////////////////////////////////////
@@ -171,7 +164,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
 
         return true;
     }
-    public boolean setFashionHistory(SQLiteDatabase db, FashionHistory history){
+    public boolean setFashionHistoryData(SQLiteDatabase db, FashionHistoryData history){
         ContentValues values = new ContentValues();
         // Put date data
         values.put("_date", history.date);
