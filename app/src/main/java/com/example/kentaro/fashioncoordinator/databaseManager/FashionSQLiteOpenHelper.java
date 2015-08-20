@@ -37,8 +37,12 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
     // "_date"      : TEXT,
     // "_topsId"    : TEXT,
     // "_bottomsId" : TEXT
+    // "_weatherIconName" : TEXT
+    // "_temperature"     : TEXT
+    // "_humidity"        : TEXT
     static final String CREATE_HISTORY_TABLE =
-            "create table " + HISTORY_TABLE_NAME + " (_date text, _topsId integer, _bottomsId integer );";
+            "create table " + HISTORY_TABLE_NAME + " (_date text, _topsId integer, _bottomsId integer, " +
+                    "_weatherIconName text, _temperature text, _humidity text );";
 
     // Drop tables
     static final String DROP_TOPS_IMAGE_TABLE =
@@ -128,7 +132,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
         }
         return path;
     }
-    public FashionHistoryData getFashionHistoryData(SQLiteDatabase db, String date){
+    public FashionWeatherHistoryData getFashionWeatherHistoryData(SQLiteDatabase db, String date){
         final String SELECT_IMAGE_IDS_FROM_HISTORY_TABLE =
                 "select _topsId, _bottomsId from " + HISTORY_TABLE_NAME + " where _date = \"" + date + "\"";
 
@@ -136,24 +140,37 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
         Cursor mCursor = db.rawQuery(SELECT_IMAGE_IDS_FROM_HISTORY_TABLE, null);
 
         if(mCursor.moveToFirst()){
-            Log.d(LOG_TAG, "[getFashionHistoryData] History Data exists.");
+            Log.d(LOG_TAG, "[getFashionWeatherHistoryData] History Data exists.");
 
-            FashionHistoryData mFashionHistoryData = new FashionHistoryData();
-            mFashionHistoryData.date = date;
+            FashionWeatherHistoryData mFashionWeatherHistoryData = new FashionWeatherHistoryData();
+            mFashionWeatherHistoryData.date = date;
 
             // Get tops ID
             int topsId = mCursor.getInt(mCursor.getColumnIndex("_topsId"));
             // Get tops image data path
-            mFashionHistoryData.topsDataPath = getTopsImagePathById(db, topsId);
+            mFashionWeatherHistoryData.topsDataPath = getTopsImagePathById(db, topsId);
 
             // Get bottoms ID
             int bottomsId = mCursor.getInt(mCursor.getColumnIndex("_bottomsId"));
             // Get bottoms image data path
-            mFashionHistoryData.bottomsDataPath = getBottomsImagePathById(db, bottomsId);
+            mFashionWeatherHistoryData.bottomsDataPath = getBottomsImagePathById(db, bottomsId);
 
-            return mFashionHistoryData;
+
+            // Get weather icon name
+            String weatherIconName = mCursor.getString(mCursor.getColumnIndex("_weatherIconName"));
+            mFashionWeatherHistoryData.weatherIconName = weatherIconName;
+
+            // Get temperature
+            String temperature = mCursor.getString(mCursor.getColumnIndex("_temperature"));
+            mFashionWeatherHistoryData.temperature = temperature;
+
+            // Get humidity
+            String humidity = mCursor.getString(mCursor.getColumnIndex("_humidity"));
+            mFashionWeatherHistoryData.humidity = humidity;
+
+            return mFashionWeatherHistoryData;
         }else{
-            Log.d(LOG_TAG, "[getFashionHistoryData] No History Data!");
+            Log.d(LOG_TAG, "[getFashionWeatherHistoryData] No History Data!");
             return null;
         }
 
@@ -192,13 +209,13 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
 
         return true;
     }
-    public boolean setFashionHistoryData(SQLiteDatabase db, FashionHistoryData history){
+    public boolean setFashionWeatherHistoryData(SQLiteDatabase db, FashionWeatherHistoryData history){
 
         boolean rtn;
 
         // Check if input history data is already existed or not.
-        if(getFashionHistoryData(db, history.date) == null){
-            Log.d(LOG_TAG, "[setFashionHistoryData] History Data is ALREADY existed.");
+        if(getFashionWeatherHistoryData(db, history.date) == null){
+            Log.d(LOG_TAG, "[setFashionWeatherHistoryData] History Data is ALREADY existed.");
             rtn = false;
         }else {
             ContentValues values = new ContentValues();
@@ -214,6 +231,11 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
             }
             values.put("_topsId", topsId);
             values.put("_bottomsId", bottomsId);
+
+            // Handle weather data from here
+            values.put("_weatherIconName", history.weatherIconName);
+            values.put("_temperature", history.temperature);
+            values.put("_humidity", history.humidity);
 
             // Insert history data into history table
             db.insert(HISTORY_TABLE_NAME, null, values);
