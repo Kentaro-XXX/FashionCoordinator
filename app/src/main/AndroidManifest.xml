@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kentaro.fashioncoordinator" >
+    package="com.example.kentaro.fashioncoordinator"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.NFC" />
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="19" />
+
 
     <application
         android:allowBackup="true"
@@ -8,29 +20,43 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name="com.example.kentaro.fashioncoordinator.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!---meta-data
+                android:name="android.nfc.action.TAG_DISCOVERED" /-->
+        </activity>
 
+        <activity android:name="com.example.kentaro.fashioncoordinator.FashionStart"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance">
+        </activity>
+
+        <activity android:name="com.example.kentaro.fashioncoordinator.FashionScan"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FashionStart"
+
+        <activity android:name="com.example.kentaro.fashioncoordinator.FashionSelect"
+            android:label="@string/app_name">
+
+        </activity>
+        <activity android:name="com.example.kentaro.fashioncoordinator.FashionSave"
+            android:label="@string/app_name">
+
+        </activity>
+        <activity android:name="com.example.kentaro.fashioncoordinator.FashionHistory"
             android:label="@string/app_name">
         </activity>
-        <activity android:name=".FashionScan"
-            android:label="@string/app_name">
-        </activity>
-        <activity android:name=".FashionSelect"
-            android:label="@string/app_name">
-        </activity>
-        <activity android:name=".FashionSave"
-            android:label="@string/app_name">
-        </activity>
-        <activity android:name=".FashionHistory"
-            android:label="@string/app_name">
-        </activity>
+
     </application>
 
 </manifest>
