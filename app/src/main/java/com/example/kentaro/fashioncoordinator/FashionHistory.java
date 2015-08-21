@@ -19,7 +19,7 @@ public class FashionHistory extends Activity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.fashion_history);
 
-        Log.d("debug_test ", "push!!");
+        Log.d("weatherLOG","push!!");
         /*
         WeatherManager WM = new WeatherManager();
         String json_result;
@@ -29,6 +29,8 @@ public class FashionHistory extends Activity {
         WeatherManager task = new WeatherManager(this);
         task.owner = this;
         task.execute(url);
+
+        //task.parse();
 
         // ƒ{ƒ^ƒ“’è‹`
         Button buttonScan = (Button)findViewById(R.id.button_history_back);
