@@ -17,7 +17,6 @@ public class FashionSQLiteTemplate {
         db = hlpr.getWritableDatabase();
 
         // Get tops image path by ID.
-        int xxx = 100;  // temp ID
-        String topsPath = hlpr.getTopsImagePathById(db, xxx);
+        String topsPath = hlpr.getTopsImagePathById(db, "hoge");
     }
 }

@@ -61,15 +61,15 @@ public class MainActivity extends ActionBarActivity {
         db = hlpr.getWritableDatabase();
 
         // Set initial data.
-        hlpr.setTopsImagePath(db, FashionInitialData.TOPS_PATH_1);
-        hlpr.setTopsImagePath(db, FashionInitialData.TOPS_PATH_2);
-        hlpr.setBottomsImagePath(db, FashionInitialData.BOTTOMS_PATH_1);
-        hlpr.setBottomsImagePath(db, FashionInitialData.BOTTOMS_PATH_2);
+        hlpr.setTopsImage(db, FashionInitialData.TOPS_PATH_1, "xxx");
+        hlpr.setTopsImage(db, FashionInitialData.TOPS_PATH_2, "xxx");
+        hlpr.setBottomsImage(db, FashionInitialData.BOTTOMS_PATH_1, "xxx");
+        hlpr.setBottomsImage(db, FashionInitialData.BOTTOMS_PATH_2, "xxx");
 
-        String tops_path1 = hlpr.getBottomsImagePathById(db, 1);
-        String tops_path2 = hlpr.getBottomsImagePathById(db, 2);
-        String bottoms_path1 = hlpr.getBottomsImagePathById(db, 1);
-        String bottoms_path2 = hlpr.getBottomsImagePathById(db, 2);
+        String tops_path1 = hlpr.getBottomsImagePathById(db, "xxx");
+        String tops_path2 = hlpr.getBottomsImagePathById(db, "xxx");
+        String bottoms_path1 = hlpr.getBottomsImagePathById(db, "xxx");
+        String bottoms_path2 = hlpr.getBottomsImagePathById(db, "xxx");
 
         Log.i(LOG_TAG, "tops_path1: " + tops_path1);
         Log.i(LOG_TAG, "tops_path2: " + tops_path2);

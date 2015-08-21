@@ -26,22 +26,22 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
 
     // Create tables
     // image table column is
-    // "_id"        : INTEGER,
+    // "_id"     : TEXT
     // "_imgData"   : TEXT
     static final String CREATE_TOPS_IMAGE_TABLE =
-            "create table " + TOPS_IMAGE_TABLE_NAME    + " ( _id integer primary key autoincrement, _imgData text );";
+            "create table " + TOPS_IMAGE_TABLE_NAME    + " ( _id text, _imgData text );";
     static final String CREATE_BOTTOMS_IMAGE_TABLE =
-            "create table " + BOTTOMS_IMAGE_TABLE_NAME + " ( _id integer primary key autoincrement, _imgData text );";
+            "create table " + BOTTOMS_IMAGE_TABLE_NAME + " ( _id text, _imgData text );";
 
     // history table column is
     // "_date"      : TEXT,
-    // "_topsId"    : TEXT,
-    // "_bottomsId" : TEXT
+    // "_topsNfcId"    : TEXT,
+    // "_bottomsNfcId" : TEXT
     // "_weatherIconName" : TEXT
     // "_temperature"     : TEXT
     // "_humidity"        : TEXT
     static final String CREATE_HISTORY_TABLE =
-            "create table " + HISTORY_TABLE_NAME + " (_date text, _topsId integer, _bottomsId integer, " +
+            "create table " + HISTORY_TABLE_NAME + " (_date text, _topsNfcId text, _bottomsNfcId text, " +
                     "_weatherIconName text, _temperature text, _humidity text );";
 
     // Drop tables
@@ -73,7 +73,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
     ///////////////////////////////////////////////
     ///                 Getter                   //
     ///////////////////////////////////////////////
-    private int getTopsImageIdByPath(SQLiteDatabase db, String path){
+    private String getTopsImageIdByPath(SQLiteDatabase db, String path){
         final String SELECT_ID_FROM_TOPS_IMAGE_TABLE =
                 "select _id from " + TOPS_IMAGE_TABLE_NAME + " where _imgData = \"" + path + "\"";
 
@@ -82,31 +82,31 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
         // Get tops data id by path
         Cursor mCursor = db.rawQuery(SELECT_ID_FROM_TOPS_IMAGE_TABLE, null);
 
-        int id = -1;
+        String id = null;
         if(mCursor.moveToFirst()){
             // Get tops data id from cursor variable.
-            id = mCursor.getInt(mCursor.getColumnIndex("_id"));
+            id = mCursor.getString(mCursor.getColumnIndex("_id"));
         }
         return id;
     }
-    private int getBottomsImageIdByPath(SQLiteDatabase db, String path){
+    private String getBottomsImageIdByPath(SQLiteDatabase db, String path){
         final String SELECT_ID_FROM_BOTTOMS_IMAGE_TABLE =
                 "select _id from " + BOTTOMS_IMAGE_TABLE_NAME + " where _imgData = \"" + path + "\"";
 
         // Get bottoms data id by path
         Cursor mCursor = db.rawQuery(SELECT_ID_FROM_BOTTOMS_IMAGE_TABLE, null);
 
-        int id = -1;
+        String id = null;
         if(mCursor.moveToFirst()){
             // Get bottoms data id from cursor variable.
-            id = mCursor.getInt(mCursor.getColumnIndex("_id"));
+            id = mCursor.getString(mCursor.getColumnIndex("_id"));
         }
         return id;
     }
 
-    public String getTopsImagePathById(SQLiteDatabase db, int id){
+    public String getTopsImagePathById(SQLiteDatabase db, String id){
         final String SELECT_IMAGE_PATH_FROM_TOPS_IMAGE_TABLE =
-                "select _imgData from " + TOPS_IMAGE_TABLE_NAME + " where _id = \"" + Integer.toString(id) + "\"";
+                "select _imgData from " + TOPS_IMAGE_TABLE_NAME + " where _id = \"" + id + "\"";
 
         // Get tops data path by id
         Cursor mCursor = db.rawQuery(SELECT_IMAGE_PATH_FROM_TOPS_IMAGE_TABLE, null);
@@ -118,9 +118,9 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
         }
         return path;
     }
-    public String getBottomsImagePathById(SQLiteDatabase db, int id){
+    public String getBottomsImagePathById(SQLiteDatabase db, String id){
         final String SELECT_IMAGE_PATH_FROM_BOTTOMS_IMAGE_TABLE =
-                "select _imgData from " + BOTTOMS_IMAGE_TABLE_NAME + " where _id = \"" + Integer.toString(id) + "\"";
+                "select _imgData from " + BOTTOMS_IMAGE_TABLE_NAME + " where _id = \"" + id + "\"";
 
         // Get bottoms data path by id
         Cursor mCursor = db.rawQuery(SELECT_IMAGE_PATH_FROM_BOTTOMS_IMAGE_TABLE, null);
@@ -134,7 +134,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
     }
     public FashionWeatherHistoryData getFashionWeatherHistoryData(SQLiteDatabase db, String date){
         final String SELECT_IMAGE_IDS_FROM_HISTORY_TABLE =
-                "select _topsId, _bottomsId from " + HISTORY_TABLE_NAME + " where _date = \"" + date + "\"";
+                "select _topsNfcId, _bottomsNfcId from " + HISTORY_TABLE_NAME + " where _date = \"" + date + "\"";
 
         // Get fashion IDs by date
         Cursor mCursor = db.rawQuery(SELECT_IMAGE_IDS_FROM_HISTORY_TABLE, null);
@@ -146,14 +146,14 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
             mFashionWeatherHistoryData.date = date;
 
             // Get tops ID
-            int topsId = mCursor.getInt(mCursor.getColumnIndex("_topsId"));
+            String topsNfcId = mCursor.getString(mCursor.getColumnIndex("_topsNfcId"));
             // Get tops image data path
-            mFashionWeatherHistoryData.topsDataPath = getTopsImagePathById(db, topsId);
+            mFashionWeatherHistoryData.topsDataPath = getTopsImagePathById(db, topsNfcId);
 
             // Get bottoms ID
-            int bottomsId = mCursor.getInt(mCursor.getColumnIndex("_bottomsId"));
+            String bottomsNfcId = mCursor.getString(mCursor.getColumnIndex("_bottomsNfcId"));
             // Get bottoms image data path
-            mFashionWeatherHistoryData.bottomsDataPath = getBottomsImagePathById(db, bottomsId);
+            mFashionWeatherHistoryData.bottomsDataPath = getBottomsImagePathById(db, bottomsNfcId);
 
 
             // Get weather icon name
@@ -179,32 +179,34 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
     ///////////////////////////////////////////////
     ///                 Setter                   //
     ///////////////////////////////////////////////
-    public boolean setTopsImagePath(SQLiteDatabase db, String path) {
+    public boolean setTopsImage(SQLiteDatabase db, String path, String id) {
 
         // Check if input path is already existed or not.
-        int existingId = getTopsImageIdByPath(db, path);
-        if(existingId == -1) {
-            Log.d(LOG_TAG, "[setTopsImagePath] Path is NOT existed.");
+        String existingNfcId = getTopsImageIdByPath(db, path);
+        if(existingNfcId.isEmpty()) {
+            Log.d(LOG_TAG, "[setTopsImage] Path is NOT existed.");
             ContentValues values = new ContentValues();
+            values.put("_id", id);
             values.put("_imgData", path);
             db.insert(TOPS_IMAGE_TABLE_NAME, null, values);
         }else{
-            Log.d(LOG_TAG, "[setTopsImagePath] Path is ALREADY existed.");
+            Log.d(LOG_TAG, "[setTopsImage] Path is ALREADY existed.");
         }
 
         return true;
     }
-    public boolean setBottomsImagePath(SQLiteDatabase db, String path) {
+    public boolean setBottomsImage(SQLiteDatabase db, String path, String id) {
 
         // Check if input path is already existed or not.
-        int existingId = getBottomsImageIdByPath(db, path);
-        if(existingId == -1) {
-            Log.d(LOG_TAG, "[setBottomsImagePath] Path is NOT existed.");
+        String existingNfcId = getBottomsImageIdByPath(db, path);
+        if(existingNfcId.isEmpty()) {
+            Log.d(LOG_TAG, "[setBottomsImage] Path is NOT existed.");
             ContentValues values = new ContentValues();
+            values.put("_id", id);
             values.put("_imgData", path);
             db.insert(BOTTOMS_IMAGE_TABLE_NAME, null, values);
         }else{
-            Log.d(LOG_TAG, "[setBottomsImagePath] Path is ALREADY existed.");
+            Log.d(LOG_TAG, "[setBottomsImage] Path is ALREADY existed.");
         }
 
         return true;
@@ -223,14 +225,14 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
             values.put("_date", history.date);
 
             // Check if path info is valid or not
-            int topsId = getTopsImageIdByPath(db, history.topsDataPath);
-            int bottomsId = getBottomsImageIdByPath(db, history.bottomsDataPath);
-            if (topsId == -1 || bottomsId == -1) {
+            String topsNfcId = getTopsImageIdByPath(db, history.topsDataPath);
+            String bottomsNfcId = getBottomsImageIdByPath(db, history.bottomsDataPath);
+            if (topsNfcId.isEmpty() || bottomsNfcId.isEmpty()) {
                 // error : Path info is invalid
                 return false;
             }
-            values.put("_topsId", topsId);
-            values.put("_bottomsId", bottomsId);
+            values.put("_topsNfcId", topsNfcId);
+            values.put("_bottomsNfcId", bottomsNfcId);
 
             // Handle weather data from here
             values.put("_weatherIconName", history.weatherIconName);
