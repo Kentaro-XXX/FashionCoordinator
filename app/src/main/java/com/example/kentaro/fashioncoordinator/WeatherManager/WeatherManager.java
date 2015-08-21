@@ -74,10 +74,9 @@ public class WeatherManager extends AsyncTask<String, Void, String> {
 
     public WeatherData GetWeather() {
         WeatherData data= new WeatherData();
-        data.temp = "25";
+        data.temperature = "25";
         data.weather = "cloudy";
-        data.humidity = "";
-        data.humidity = weather;
+        data.humidity = "50";
         return data;
     }
 

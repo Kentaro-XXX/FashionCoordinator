@@ -120,7 +120,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
     }
     public String getBottomsImagePathById(SQLiteDatabase db, String id){
         final String SELECT_IMAGE_PATH_FROM_BOTTOMS_IMAGE_TABLE =
-                "select _imgData from " + BOTTOMS_IMAGE_TABLE_NAME + " where _id = \"" + id + "\"";
+                "select _imgData from " + BOTTOMS_IMAGE_TABLE_NAME + " where _id = '" + id + "'";
 
         // Get bottoms data path by id
         Cursor mCursor = db.rawQuery(SELECT_IMAGE_PATH_FROM_BOTTOMS_IMAGE_TABLE, null);
@@ -183,7 +183,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
 
         // Check if input path is already existed or not.
         String existingNfcId = getTopsImageIdByPath(db, path);
-        if(existingNfcId.isEmpty()) {
+        if(existingNfcId == null) {
             Log.d(LOG_TAG, "[setTopsImage] Path is NOT existed.");
             ContentValues values = new ContentValues();
             values.put("_id", id);
@@ -199,7 +199,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
 
         // Check if input path is already existed or not.
         String existingNfcId = getBottomsImageIdByPath(db, path);
-        if(existingNfcId.isEmpty()) {
+        if(existingNfcId == null) {
             Log.d(LOG_TAG, "[setBottomsImage] Path is NOT existed.");
             ContentValues values = new ContentValues();
             values.put("_id", id);
