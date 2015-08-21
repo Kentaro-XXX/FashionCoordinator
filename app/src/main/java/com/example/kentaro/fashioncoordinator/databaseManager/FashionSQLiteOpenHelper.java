@@ -56,7 +56,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
     public FashionSQLiteOpenHelper(Context c){
         super(c, DB, null, DB_VERSION);
     }
-    
+
     public void onCreate(SQLiteDatabase db){
         // execute tables creation.
         db.execSQL(CREATE_TOPS_IMAGE_TABLE);
