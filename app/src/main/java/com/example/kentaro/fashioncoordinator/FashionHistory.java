@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.kentaro.fashioncoordinator.WeatherManager.WeatherData;
 import com.example.kentaro.fashioncoordinator.WeatherManager.WeatherManager;
 
 /**
@@ -19,18 +20,15 @@ public class FashionHistory extends Activity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.fashion_history);
 
-        Log.d("weatherLOG","push!!");
-        /*
-        WeatherManager WM = new WeatherManager();
-        String json_result;
-        json_result = WM.weather_method();*/
+        Log.d("weatherLOG", "weather get start!!");
+        WeatherManager task = new WeatherManager();
+        task.execute("start");
 
-        String url = "http://api.openweathermap.org/data/2.5/weather?q=Tokyo,jp";
-        WeatherManager task = new WeatherManager(this);
-        task.owner = this;
-        task.execute(url);
-
-        //task.parse();
+        WeatherData testdata = new WeatherData();
+        testdata = task.GetWeather();
+        Log.d("weatherLOG", testdata.temp);
+        Log.d("weatherLOG", testdata.weather);
+        Log.d("weatherLOG", testdata.humidity);
 
         // ƒ{ƒ^ƒ“’è‹`
         Button buttonScan = (Button)findViewById(R.id.button_history_back);

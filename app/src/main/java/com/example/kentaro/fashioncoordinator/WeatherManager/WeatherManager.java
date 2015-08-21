@@ -30,17 +30,14 @@ import java.util.Random;
  * Created by 0000131258 on 2015/08/11.
  */
 public class WeatherManager extends AsyncTask<String, Void, String> {
-    public Activity owner;
+    //public Activity owner;
     private String ReceiveStr;
-
-    public WeatherManager(Activity activity) {
-        owner = activity;
-    }
+    String api_url = "http://api.openweathermap.org/data/2.5/weather?q=Tokyo,jp";
 
     @Override
     protected String doInBackground(String... url) {
         try {
-            HttpGet httpGet = new HttpGet(url[0]);
+            HttpGet httpGet = new HttpGet(api_url);
 
             DefaultHttpClient httpClient = new DefaultHttpClient();
             httpGet.setHeader("Connection", "Keep-Alive");
@@ -52,27 +49,22 @@ public class WeatherManager extends AsyncTask<String, Void, String> {
             } else {
                 ReceiveStr = EntityUtils.toString(response.getEntity(), "UTF-8");
             }
-            wait(10000);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
+        return ReceiveStr;
     }
-
+    String weather = "";
     @Override
     protected void onPostExecute(String result) {
-       // TextView textView2 = (TextView) owner.findViewById(R.id.textView2);
-       //textView2.setText(ReceiveStr);
-        String weather = "";
-        Log.d("weatherLOG", ReceiveStr);
+
+        //String weather = "";
+        Log.d("weatherLOG", result);
         try {
-            Log.d("weatherLOG", "try");
-            JSONObject json = new JSONObject(ReceiveStr);
-            Log.d("weatherLOG", "middle");
+            JSONObject json = new JSONObject(result);
             weather = json.getString("clouds");
             //weather = json.getJSONObject("weather").getString("description");
 
-            Log.d("weatherLOG", "end");
         }catch (JSONException e) {
             Log.d("weatherLOG", "exception");
             e.printStackTrace();
@@ -80,9 +72,13 @@ public class WeatherManager extends AsyncTask<String, Void, String> {
         Log.d("weatherLOG", weather);
     }
 
-
-    public void parse(){
-
+    public WeatherData GetWeather() {
+        WeatherData data= new WeatherData();
+        data.temp = "25";
+        data.weather = "cloudy";
+        data.humidity = "";
+        data.humidity = weather;
+        return data;
     }
 
 }
