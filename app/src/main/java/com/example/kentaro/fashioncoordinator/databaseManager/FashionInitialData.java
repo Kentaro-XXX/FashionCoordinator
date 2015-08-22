@@ -5,28 +5,46 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Kentaro on 2015/08/16.
  */
 public class FashionInitialData {
-    static final String TOPS_PATH_1 = "FashionCoordinator/tops/xxx1.JPG";
-    static final String TOPS_PATH_2 = "FashionCoordinator/tops/xxx2.JPG";
-    static final String BOTTOMS_PATH_1 = "FashionCoordinator/bottoms/xxx1.JPG";
-    static final String BOTTOMS_PATH_2 = "FashionCoordinator/bottoms/xxx2.JPG";
+    // Default tops path and ID data.
+    private static final Map<String, String> DEFAULT_TOPS_DATA;
+        static  {
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("FashionCoordinator/tops/PinkShirts.JPG",       "T_Pink1");
+            map.put("FashionCoordinator/tops/ShirtsBlack.JPG",      "T_Black1");
+            map.put("FashionCoordinator/tops/ShirtsKahki.JPG",      "T_Kahki1");
+            map.put("FashionCoordinator/tops/ShirtsNatural.JPG",    "T_Natural1");
+            map.put("FashionCoordinator/tops/ShirtsNavy.JPG",       "T_Navy1");
+            map.put("FashionCoordinator/tops/ShirtsOrange.JPG",     "T_Orange1");
+            map.put("FashionCoordinator/tops/ShirtsYellow.JPG",     "T_Yellow1");
 
+            DEFAULT_TOPS_DATA = Collections.unmodifiableMap(map);
+        };
 
-    static final String TOPS_ID_1 =    "T_S1";
-    static final String TOPS_ID_2 =    "T_S2";
-    static final String BOTTOMS_ID_1 = "B_S1";
-    static final String BOTTOMS_ID_2 = "B_S2";
+    // Default bottoms path and ID data.
+    private static final Map<String, String> DEFAULT_BOTTOMS_DATA;
+        static {
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("FashionCoordinator/bottoms/PantsBeige.JPG",    "B_Beige1");
+            map.put("FashionCoordinator/bottoms/PantsBlack.JPG",    "B_Black1");
+            map.put("FashionCoordinator/bottoms/PantsGray.JPG",     "B_Gray1");
+            map.put("FashionCoordinator/bottoms/PantsGray2.JPG",    "B_Gray2");
+            map.put("FashionCoordinator/bottoms/PantsGreen2.JPG",   "B_Green1");
+            map.put("FashionCoordinator/bottoms/PantsNavy.JPG",     "B_Navy1");
+            map.put("FashionCoordinator/bottoms/PantsWine.JPG",     "B_Wine1");
 
-
+            DEFAULT_BOTTOMS_DATA = Collections.unmodifiableMap(map);
+        }
     final String LOG_TAG = "FashionInitialData_LOG";
 
-    private String topsPath1;
-    private String topsPath2;
-    private String bottomsPath1;
-    private String bottomsPath2;
     private Context context;
 
     public FashionInitialData(Context con){
@@ -34,13 +52,7 @@ public class FashionInitialData {
     }
 
     public void setFashionInitialData(){
-        String externalStorageDir = Environment.getExternalStorageState();
-
-        topsPath1 = externalStorageDir + "/" + TOPS_PATH_1;
-        topsPath2 = externalStorageDir + "/" + TOPS_PATH_2;
-        bottomsPath1 = externalStorageDir + "/" + BOTTOMS_PATH_1;
-        bottomsPath2 = externalStorageDir + "/" + BOTTOMS_PATH_2;
-
+        String externalStorageDir = Environment.getExternalStorageDirectory().getPath();
 
         /* Initiate Database. */
         SQLiteDatabase db;
@@ -51,21 +63,29 @@ public class FashionInitialData {
         db = hlpr.getWritableDatabase();
 
         // Set initial data.
-        hlpr.setTopsImage(db, topsPath1, TOPS_ID_1);
-        hlpr.setTopsImage(db, topsPath2, TOPS_ID_2);
-        hlpr.setBottomsImage(db, bottomsPath1, BOTTOMS_ID_1);
-        hlpr.setBottomsImage(db, bottomsPath2, BOTTOMS_ID_2);
+        for (String path : DEFAULT_TOPS_DATA.keySet()){
+            String absolutePath = externalStorageDir + "/" + path;
+            hlpr.setTopsImage(db, absolutePath, DEFAULT_TOPS_DATA.get(path));
 
-        String tops_path1 = hlpr.getTopsImagePathById(db, TOPS_ID_1);
-        String tops_path2 = hlpr.getTopsImagePathById(db, TOPS_ID_2);
-        String bottoms_path1 = hlpr.getBottomsImagePathById(db, BOTTOMS_ID_1);
-        String bottoms_path2 = hlpr.getBottomsImagePathById(db, BOTTOMS_ID_2);
+            Log.i(LOG_TAG, "id: " + DEFAULT_TOPS_DATA.get(path));
+            File imgFile = new File(absolutePath);
+            if(imgFile.exists()){
+                Log.i(LOG_TAG, "OK! File Exist! (" + absolutePath +")");
+            }else{
+                Log.e(LOG_TAG, "Error! File Not Exist! (" + absolutePath +")");
+            }
+        }
+        for (String path : DEFAULT_BOTTOMS_DATA.keySet()){
+            String absolutePath = externalStorageDir + "/" + path;
+            hlpr.setTopsImage(db, absolutePath, DEFAULT_BOTTOMS_DATA.get(path));
 
-        Log.i(LOG_TAG, "tops_path1: " + tops_path1);
-        Log.i(LOG_TAG, "tops_path2: " + tops_path2);
-        Log.i(LOG_TAG, "bottoms_path1: " + bottoms_path1);
-        Log.i(LOG_TAG, "bottoms_path2: " + bottoms_path2);
-
-
+            Log.i(LOG_TAG, "id: " + DEFAULT_BOTTOMS_DATA.get(path));
+            File imgFile = new File(absolutePath);
+            if(imgFile.exists()){
+                Log.i(LOG_TAG, "OK! File Exist! (" + absolutePath +")");
+            }else{
+                Log.e(LOG_TAG, "Error! File Not Exist! (" + absolutePath +")");
+            }
+        }
     }
 }
