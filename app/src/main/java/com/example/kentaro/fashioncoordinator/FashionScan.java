@@ -19,6 +19,9 @@ import android.view.Menu;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
+
 /**
  * Created by 0000100038 on 2015/07/22.
  */
@@ -33,8 +36,8 @@ public class FashionScan extends Activity {
         setContentView(R.layout.fashion_scan);
 
         // ボタンの定義
-        Button buttonOK = (Button)findViewById(R.id.button_scan_ok);
-        Button buttonHome = (Button)findViewById(R.id.button_scan_home);
+        BootstrapButton buttonOK = (BootstrapButton)findViewById(R.id.button_scan_ok);
+        BootstrapCircleThumbnail buttonHome = (BootstrapCircleThumbnail)findViewById(R.id.button_scan_home);
 
         // OKボタンが押されたときの処理
         buttonOK.setOnClickListener(new View.OnClickListener() {

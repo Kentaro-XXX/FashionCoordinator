@@ -19,6 +19,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Collections;
@@ -76,10 +79,10 @@ public class FashionSelect extends Activity {
         candidateIndexMax = 4;  //TODO
 
         // ボタン定義
-        final Button buttonOK = (Button) findViewById(R.id.button_select_ok);
-        Button buttonNext = (Button) findViewById(R.id.button_select_next);
-        Button buttonPrev = (Button) findViewById(R.id.button_select_prev);
-        Button buttonHome = (Button) findViewById(R.id.button_select_home);
+        final BootstrapButton buttonOK = (BootstrapButton) findViewById(R.id.button_select_ok);
+        BootstrapButton buttonNext = (BootstrapButton) findViewById(R.id.button_select_next);
+        BootstrapButton buttonPrev = (BootstrapButton) findViewById(R.id.button_select_prev);
+        BootstrapCircleThumbnail buttonHome = (BootstrapCircleThumbnail) findViewById(R.id.button_select_home);
 
         // OKボタンが押されたときの処理
         buttonOK.setOnClickListener(new View.OnClickListener() {

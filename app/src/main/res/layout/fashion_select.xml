@@ -1,39 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:id="@+id/button_select_ok"
+            android:layout_alignTop="@+id/button_select_prev"
+            android:layout_centerHorizontal="true" />
 
-    <Button
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prev"
+            android:id="@+id/button_select_prev"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="34dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/button_select_next"
+            android:layout_alignTop="@+id/button_select_ok"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:id="@+id/button_select_home"
+            android:layout_alignEnd="@+id/button3" />
+    -->
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
         android:id="@+id/button_select_ok"
         android:layout_alignTop="@+id/button_select_prev"
+        bootstrap:bb_type="success"
         android:layout_centerHorizontal="true" />
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Prev"
         android:id="@+id/button_select_prev"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        bootstrap:bb_icon_left="fa-arrow-left"
+        bootstrap:bb_type="success"
         android:layout_marginBottom="34dp" />
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Next"
         android:id="@+id/button_select_next"
         android:layout_alignTop="@+id/button_select_ok"
+        bootstrap:bb_icon_right="fa-arrow-right"
+        bootstrap:bb_type="success"
         android:layout_alignParentEnd="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+
+<!--    <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
-        android:id="@+id/button_select_home"
-        android:layout_alignEnd="@+id/button3" />
+        android:text=""
+        bootstrap:bb_icon_right="fa-home"
+        bootstrap:bb_type="success"
+        android:id="@+id/button_select_home" />
+-->
+    <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:text=""
+        bootstrap:bb_icon_right="fa-home"
+        bootstrap:bct_size="small"
+        bootstrap:bct_image="@drawable/home_icon_128"
+        android:id="@+id/button_select_home" />
 
     <RelativeLayout
         android:layout_width="match_parent"

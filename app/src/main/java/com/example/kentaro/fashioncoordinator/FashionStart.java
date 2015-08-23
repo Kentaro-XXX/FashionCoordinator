@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
+
 /**
  * Created by 0000100038 on 2015/07/22.
  */
@@ -16,9 +19,10 @@ public class FashionStart extends Activity {
         super.onCreate(saveIntanceState);
         setContentView(R.layout.fashion_start);
 
-        Button buttonScan = (Button) findViewById(R.id.button_start_scan);
-        Button buttonHistory = (Button) findViewById(R.id.button_start_history);
-        Button buttonHome = (Button)findViewById(R.id.button_start_home);
+//        Button buttonScan = (Button) findViewById(R.id.button_start_scan);
+        BootstrapButton buttonScan = (BootstrapButton) findViewById(R.id.button_start_scan);
+        BootstrapButton buttonHistory = (BootstrapButton) findViewById(R.id.button_start_history);
+        BootstrapCircleThumbnail buttonHome = (BootstrapCircleThumbnail)findViewById(R.id.button_start_home);
 
         // ScanÉ{É^ÉìÇ™âüÇ≥ÇÍÇΩÇ∆Ç´ÇÃèàóù
         buttonScan.setOnClickListener(new View.OnClickListener() {
