@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
 <!--    <Button
         android:layout_width="wrap_content"
@@ -20,16 +21,8 @@
         android:id="@+id/button_scan_ok"
         android:layout_marginBottom="34dp"
         android:layout_alignParentBottom="true"
-        bootstrap:bb_type="success"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Scan"
-        android:id="@+id/textView2"
-        android:layout_alignBottom="@+id/button_scan_home"
+        bootstrap:bb_type="info"
+        android:textSize="24sp"
         android:layout_centerHorizontal="true" />
 
     <!--
@@ -52,5 +45,25 @@
         bootstrap:bct_size="small"
         bootstrap:bct_image="@drawable/home_icon_128"
         android:id="@+id/button_scan_home" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/nfc_connection_shirt"
+        android:layout_alignLeft="@+id/button_scan_home"
+        android:layout_alignStart="@+id/button_scan_home"
+        android:layout_below="@+id/button_scan_home"
+        android:layout_above="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="NFCスキャンしてください"
+        android:id="@+id/textView2"
+        android:layout_marginBottom="63dp"
+        android:layout_above="@+id/button_scan_ok"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

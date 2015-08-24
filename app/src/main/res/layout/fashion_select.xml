@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
     <!--
         <Button
             android:layout_width="wrap_content"
@@ -43,8 +44,10 @@
         android:text="OK"
         android:id="@+id/button_select_ok"
         android:layout_alignTop="@+id/button_select_prev"
-        bootstrap:bb_type="success"
-        android:layout_centerHorizontal="true" />
+        bootstrap:bb_type="info"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:textSize="24sp"/>
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
@@ -54,8 +57,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         bootstrap:bb_icon_left="fa-arrow-left"
-        bootstrap:bb_type="success"
-        android:layout_marginBottom="34dp" />
+        bootstrap:bb_type="info"
+        android:layout_marginBottom="34dp"
+        android:textSize="24sp"/>
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
@@ -64,8 +68,9 @@
         android:id="@+id/button_select_next"
         android:layout_alignTop="@+id/button_select_ok"
         bootstrap:bb_icon_right="fa-arrow-right"
-        bootstrap:bb_type="success"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        bootstrap:bb_type="info"
+        android:textSize="24sp"/>
 
 
 <!--    <com.beardedhen.androidbootstrap.BootstrapButton
@@ -112,6 +117,7 @@
             android:layout_height="match_parent"
             android:id="@+id/imageView_bottoms"
             android:layout_marginTop="200dp" />
+
     </RelativeLayout>
 
 </RelativeLayout>
