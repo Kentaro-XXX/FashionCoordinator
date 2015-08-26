@@ -21,7 +21,7 @@ public class FashionInitialData {
             map.put("FashionCoordinator/tops/PinkShirts.JPG",       "T_Pink1");
             map.put("FashionCoordinator/tops/ShirtsBlack.JPG",      "T_Black1");
             map.put("FashionCoordinator/tops/ShirtsKahki.JPG",      "T_Kahki1");
-            map.put("FashionCoordinator/tops/ShirtsNatural.JPG",    "T_Natural1");
+            map.put("FashionCoordinator/tops/ShirtsNatural.JPG",    "enw");//T_Natural1");
             map.put("FashionCoordinator/tops/ShirtsNavy.JPG",       "T_Navy1");
             map.put("FashionCoordinator/tops/ShirtsOrange.JPG",     "T_Orange1");
             map.put("FashionCoordinator/tops/ShirtsYellow.JPG",     "T_Yellow1");

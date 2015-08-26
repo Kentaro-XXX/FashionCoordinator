@@ -106,7 +106,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public String getTopsImagePathById(SQLiteDatabase db, String id){
         final String SELECT_IMAGE_PATH_FROM_TOPS_IMAGE_TABLE =
-                "select _imgData from " + TOPS_IMAGE_TABLE_NAME + " where _id = \"" + id + "\"";
+                "select _imgData from " + TOPS_IMAGE_TABLE_NAME + " where _id = '" + id + "'";
 
         // Get tops data path by id
         Cursor mCursor = db.rawQuery(SELECT_IMAGE_PATH_FROM_TOPS_IMAGE_TABLE, null);

@@ -2,6 +2,8 @@ package com.example.kentaro.fashioncoordinator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,15 +19,37 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
+
+import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.view.ViewGroup;
+
+
+
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
+import android.util.Log;
+
+import com.example.kentaro.fashioncoordinator.databaseManager.FashionInitialData;
+import com.example.kentaro.fashioncoordinator.databaseManager.FashionSQLiteOpenHelper;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 
 /**
  * Created by 0000100038 on 2015/07/22.
  */
-public class FashionScan extends Activity {
+public class FashionScan extends Activity implements View.OnClickListener {
+//public class FashionScan extends Activity {
+
+    final String LOG_TAG = "FashionScan_LOG";
+    private String str_key;
 
     //NFC★
     private NfcAdapter mNfcAdapter;
@@ -36,11 +60,13 @@ public class FashionScan extends Activity {
         setContentView(R.layout.fashion_scan);
 
         // ボタンの定義
+//        Button buttonOK = (Button)findViewById(R.id.button_scan_ok);
+//        Button buttonHome = (Button)findViewById(R.id.button_scan_home);
         BootstrapButton buttonOK = (BootstrapButton)findViewById(R.id.button_scan_ok);
         BootstrapCircleThumbnail buttonHome = (BootstrapCircleThumbnail)findViewById(R.id.button_scan_home);
 
         // OKボタンが押されたときの処理
-        buttonOK.setOnClickListener(new View.OnClickListener() {
+/*        buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentSelect = new Intent(getApplication(), FashionSelect.class);
@@ -49,6 +75,8 @@ public class FashionScan extends Activity {
 
             }
         });
+		*/
+        buttonOK.setOnClickListener(this);
 
         // Homeボタンが押されたときの処理
         buttonHome.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +89,34 @@ public class FashionScan extends Activity {
             }
         });
 
+
+        /**画像を表示する**/
+        //宣言
+     /*   ImageView imageView1 = new ImageView(this);//(ImageView)findViewById(R.drawable.image0);
+        //画像のアサイン
+        imageView1.setImageResource(R.drawable.image2);
+        //サイズ変更
+        imageView1.setScaleType(ImageView.ScaleType.CENTER);
+         //表示する
+        setContentView(imageView1);
+	*/
     }
+
+    @Override
+    public void onClick(View v){
+        Intent intentSelect = new Intent(getApplication(), FashionSelect.class);
+        //　インテントに値をセット
+        intentSelect.putExtra("keyword", str_key);
+        // Select画面に遷移する
+        startActivity(intentSelect);
+
+
+    }
+    //画像表示
+    // @Override
+    //protected void onCreate(Bundle savedInstanceState) {
+    //    super.onCreate(savedInstanceState);
+    //}	
 
     @Override
     protected void onResume(){
@@ -170,18 +225,42 @@ public class FashionScan extends Activity {
                         str += String.format("%c", data & 0xff);
                     }
                 }
+                String FashionPath = GetFashionPath(str.substring(1));
+                str_key = FashionPath;
 
                 Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+                // Set initial data.
+                Log.i(LOG_TAG, "tops_tag: " + str);
+                Log.i(LOG_TAG, "tops_path1: " + str_key);
+
+
+
             }
         }
         else{
-            Toast.makeText(getApplicationContext(), "中身のないタグです", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_SHORT).show();
         }
 
 
 
     }
 
+
+    private String GetFashionPath(String str){
+        /* Initiate Database. */
+        SQLiteDatabase db;
+        // FashionSQLiteOpenHelper Class
+        FashionSQLiteOpenHelper hlpr = new FashionSQLiteOpenHelper(getApplicationContext());
+
+        // Get writable database
+        db = hlpr.getWritableDatabase();
+        //ここまでおまじない
+
+        String FashionPath = hlpr.getTopsImagePathById(db, str);//test
+        return FashionPath;
+
+
+    }
 
     //byte配列をStringにして返す
     public String bytesToString(byte[] bytes){

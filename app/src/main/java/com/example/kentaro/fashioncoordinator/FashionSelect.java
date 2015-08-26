@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
@@ -74,6 +75,12 @@ public class FashionSelect extends Activity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.fashion_select);
 
+        // インテントを取得
+        Intent intent = getIntent();
+        // インテントに保存されたデータを取得
+        String data = intent.getStringExtra("keyword");
+        //表示してみる
+        Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT).show();
         // Initialize candidateIndex
         candidateIndex = 0;
         candidateIndexMax = 4;  //TODO
