@@ -21,7 +21,7 @@ public class FashionHistory extends Activity {
         setContentView(R.layout.fashion_history);
 
         Log.d("weatherLOG", "weather get start!!");
-        WeatherManager task = new WeatherManager();
+        WeatherManager task = new WeatherManager(this);
         task.execute("start");
 
         WeatherData testdata;
@@ -31,7 +31,7 @@ public class FashionHistory extends Activity {
         Log.d("weatherLOG", testdata.weather);
         Log.d("weatherLOG", testdata.humidity);
 
-        // ボタン定義
+        // eボタン定義
         Button buttonScan = (Button)findViewById(R.id.button_history_back);
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,4 +45,11 @@ public class FashionHistory extends Activity {
     }
 
 
+    public void EndGetWeather(String humidity){
+
+    }
+
+
 }
+
+
