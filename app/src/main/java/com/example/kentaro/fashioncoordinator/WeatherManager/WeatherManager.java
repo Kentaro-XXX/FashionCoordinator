@@ -74,9 +74,10 @@ public class WeatherManager extends AsyncTask<String, Void, String> {
 
     public WeatherData GetWeather() {
         WeatherData data= new WeatherData();
-        data.temperature = "25";
-        data.weather = "cloudy";
-        data.humidity = "50";
+        data.temperature = json.getJSONObject("main").getJSONObject("temp");
+        data.weather = json.getJSONArray("weather").getJSONObject(0).getString("main");
+        data.humidity = json.getJSONObject("main").getJSONObject("humidity");
+    	data.icon = json.getJSONArray("weather").getJSONObject(0).getString("icon");
         return data;
     }
 
