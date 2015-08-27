@@ -24,8 +24,9 @@ public class FashionHistory extends Activity {
         WeatherManager task = new WeatherManager();
         task.execute("start");
 
-        WeatherData testdata = new WeatherData();
+        WeatherData testdata;
         testdata = task.GetWeather();
+        Log.d("weatherLOG", "show data");
         Log.d("weatherLOG", testdata.temperature);
         Log.d("weatherLOG", testdata.weather);
         Log.d("weatherLOG", testdata.humidity);

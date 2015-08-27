@@ -7,4 +7,5 @@ public class WeatherData {
     public String temperature;
     public String weather;
     public String humidity;
+	public String icon;
 }
