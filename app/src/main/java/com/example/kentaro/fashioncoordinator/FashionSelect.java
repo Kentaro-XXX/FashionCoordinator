@@ -136,7 +136,7 @@ public class FashionSelect extends Activity {
 
                 // ‰æ–Ê’†‰›‚É•\Ž¦
                 //popupWindow.showAtLocation(findViewById(R.id.button_popup), Gravity.CENTER, 0, 0);
-                popupWindow.showAsDropDown(buttonOK, -130, -300);
+                popupWindow.showAsDropDown(buttonOK, -130, -600);
 
             }
 
