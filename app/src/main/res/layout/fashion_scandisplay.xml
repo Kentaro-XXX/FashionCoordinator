@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/button_scandisplay_ok"
+        android:layout_marginBottom="34dp"
+        android:layout_alignParentBottom="true"
+        bootstrap:bb_type="info"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true" />
+
+
+    <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:text=""
+        bootstrap:bb_icon_right="fa-home"
+        bootstrap:bct_size="small"
+        bootstrap:bct_image="@drawable/home_icon_128"
+        android:id="@+id/button_scandisplay_home" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageScanView"
+        android:layout_alignLeft="@+id/button_scandisplay_home"
+        android:layout_alignStart="@+id/button_scandisplay_home"
+        android:layout_below="@+id/button_scandisplay_home"
+        android:layout_above="@+id/button_scandisplay_ok"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+
+</RelativeLayout>

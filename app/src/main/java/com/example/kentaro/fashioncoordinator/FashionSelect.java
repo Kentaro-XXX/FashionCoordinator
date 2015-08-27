@@ -116,7 +116,7 @@ public class FashionSelect extends Activity {
                 float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 330, getResources().getDisplayMetrics());
                 popupWindow.setWindowLayoutMode((int) width, 200);
                 popupWindow.setWidth((int) width);
-                popupWindow.setHeight(200);
+                popupWindow.setHeight(500);
 
 
                 // popupÇÃOKÉ{É^ÉìÇÃê›íË
@@ -136,7 +136,7 @@ public class FashionSelect extends Activity {
 
                 // âÊñ íÜâõÇ…ï\é¶
                 //popupWindow.showAtLocation(findViewById(R.id.button_popup), Gravity.CENTER, 0, 0);
-                popupWindow.showAsDropDown(buttonOK, -130, -600);
+                popupWindow.showAsDropDown(buttonOK, -130, +100);
 
             }
 

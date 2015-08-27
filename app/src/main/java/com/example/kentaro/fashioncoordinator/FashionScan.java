@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.net.Uri;
@@ -51,7 +52,7 @@ public class FashionScan extends Activity implements View.OnClickListener {
     final String LOG_TAG = "FashionScan_LOG";
     private String str_key;
 
-    //NFCš
+    //NFCï¿½ï¿½
     private NfcAdapter mNfcAdapter;
 
     @Override
@@ -59,60 +60,47 @@ public class FashionScan extends Activity implements View.OnClickListener {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.fashion_scan);
 
-        // ƒ{ƒ^ƒ“‚Ì’è‹`
-//        Button buttonOK = (Button)findViewById(R.id.button_scan_ok);
-//        Button buttonHome = (Button)findViewById(R.id.button_scan_home);
         BootstrapButton buttonOK = (BootstrapButton)findViewById(R.id.button_scan_ok);
         BootstrapCircleThumbnail buttonHome = (BootstrapCircleThumbnail)findViewById(R.id.button_scan_home);
 
-        // OKƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
-/*        buttonOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentSelect = new Intent(getApplication(), FashionSelect.class);
-                // Select‰æ–Ê‚É‘JˆÚ‚·‚é
-                startActivity(intentSelect);
-
-            }
-        });
-		*/
+        //OK
         buttonOK.setOnClickListener(this);
 
-        // Homeƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+        // Homeï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½Æ‚ï¿½ï¿½Ìï¿½ï¿½ï¿½
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentStart = new Intent(getApplication(), FashionStart.class);
-                // Start‰æ–Ê‚É‘JˆÚ‚·‚é
+                // Startï¿½ï¿½Ê‚É‘Jï¿½Ú‚ï¿½ï¿½ï¿½
                 startActivity(intentStart);
 
             }
         });
 
 
-        /**‰æ‘œ‚ğ•\¦‚·‚é**/
-        //éŒ¾
+        /**ï¿½æ‘œï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**/
+        //ï¿½éŒ¾
      /*   ImageView imageView1 = new ImageView(this);//(ImageView)findViewById(R.drawable.image0);
-        //‰æ‘œ‚ÌƒAƒTƒCƒ“
+        //ï¿½æ‘œï¿½ÌƒAï¿½Tï¿½Cï¿½ï¿½
         imageView1.setImageResource(R.drawable.image2);
-        //ƒTƒCƒY•ÏX
+        //ï¿½Tï¿½Cï¿½Yï¿½ÏX
         imageView1.setScaleType(ImageView.ScaleType.CENTER);
-         //•\¦‚·‚é
+         //ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         setContentView(imageView1);
 	*/
     }
 
     @Override
     public void onClick(View v){
-        Intent intentSelect = new Intent(getApplication(), FashionSelect.class);
-        //@ƒCƒ“ƒeƒ“ƒg‚É’l‚ğƒZƒbƒg
-        intentSelect.putExtra("keyword", str_key);
-        // Select‰æ–Ê‚É‘JˆÚ‚·‚é
-        startActivity(intentSelect);
-
-
+        Intent intentScandisplay = new Intent(getApplication(), FashionScanDisplay.class);
+        //ã€€ã‚¤ãƒ³ãƒ†ãƒ³ãƒˆã«å€¤ã‚’ã‚»ãƒƒãƒˆ
+        intentScandisplay.putExtra("keyword", str_key);
+        // Selectç”»é¢ã«é·ç§»ã™ã‚‹
+        startActivity(intentScandisplay);
+        //String FashionPath = GetFashionPath(str.substring(1));
+        Log.d(LOG_TAG, "ScanLastFashionPath : " + str_key);
     }
-    //‰æ‘œ•\¦
+    //ï¿½æ‘œï¿½\ï¿½ï¿½
     // @Override
     //protected void onCreate(Bundle savedInstanceState) {
     //    super.onCreate(savedInstanceState);
@@ -122,35 +110,35 @@ public class FashionScan extends Activity implements View.OnClickListener {
     protected void onResume(){
         super.onResume();
 
-        //¥¥¥¥‚±‚±‚©‚ç
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        //¥NFC‚Ì‹@”\”»’è
-        //NFC‹@”\‚È‚µ‹@í
+        //ï¿½ï¿½NFCï¿½Ì‹@ï¿½\ï¿½ï¿½ï¿½ï¿½
+        //NFCï¿½@ï¿½\ï¿½È‚ï¿½ï¿½@ï¿½ï¿½
         if(mNfcAdapter == null){
             Toast.makeText(getApplicationContext(), "no Nfc feature", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        //NFC’ÊMOFFƒ‚[ƒh
+        //NFCï¿½ÊMOFFï¿½ï¿½ï¿½[ï¿½h
         if(!mNfcAdapter.isEnabled()){
             Toast.makeText(getApplicationContext(), "off Nfc feature", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-        //£NFC‚Ì‹@”\”»’è
+        //ï¿½ï¿½NFCï¿½Ì‹@ï¿½\ï¿½ï¿½ï¿½ï¿½
 
-        //NFC‚ğŒ©‚Â‚¯‚½‚Æ‚«‚É”½‰‚³‚¹‚é
-        //PendingIntent¨ƒ^ƒCƒ~ƒ“ƒOiƒCƒxƒ“ƒg”­¶j‚ğw’è‚µ‚ÄIntent‚ğ”­¶‚³‚¹‚é
+        //NFCï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½É”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //PendingIntentï¿½ï¿½ï¿½^ï¿½Cï¿½~ï¿½ï¿½ï¿½Oï¿½iï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½wï¿½è‚µï¿½ï¿½Intentï¿½ğ”­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,getClass()), 0);
 
-        //ƒ^ƒCƒ~ƒ“ƒO‚ÍAƒ^ƒO”­Œ©‚Æ‚·‚éB
+        //ï¿½^ï¿½Cï¿½~ï¿½ï¿½ï¿½Oï¿½ÍAï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½B
         IntentFilter[] intentFilter = new IntentFilter[]{
                 new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
         };
 
-        //”½‰‚·‚éƒ^ƒO‚Ìí—Ş‚ğw’èB
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Oï¿½Ìï¿½Ş‚ï¿½ï¿½wï¿½ï¿½B
         String[][] techList = new String[][]{
                 {
                         android.nfc.tech.NfcA.class.getName(),
@@ -164,25 +152,25 @@ public class FashionScan extends Activity implements View.OnClickListener {
                 }
         };
         mNfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilter, techList);
-        //£££££‚±‚±‚Ü‚Å
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
     }
 
     @Override
     public void onPause(){
         super.onPause();
 
-        //¥¥¥¥‚±‚±‚©‚ç
-        //ƒAƒvƒŠ‚ª•\¦‚³‚ê‚Ä‚È‚¢‚ÍANFC‚É”½‰‚µ‚È‚­‚Ä‚à‚¢‚¢‚æ‚¤‚É‚·‚é
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //ï¿½Aï¿½vï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚È‚ï¿½ï¿½ï¿½ï¿½ÍANFCï¿½É”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
         //  mNfcAdapter.disableForegroundDispatch(this);
-        //£££££‚±‚±‚Ü‚Å
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
     }
 
-    //NFC‚ğƒ^ƒbƒ`‚µ‚½Œã‚Ìˆ—
+    //NFCï¿½ï¿½ï¿½^ï¿½bï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
     @Override
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
 
-        //¥¥¥¥‚±‚±‚©‚ç
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         String action = intent.getAction();
         if(TextUtils.isEmpty(action)){
             return;
@@ -192,50 +180,59 @@ public class FashionScan extends Activity implements View.OnClickListener {
             return;
         }
 
-        //¬Œ÷I‚Æ•\¦‚µ‚Ä‚İ‚é
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½Æ•\ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚İ‚ï¿½
         Toast.makeText(getApplicationContext(), "Get", Toast.LENGTH_SHORT).show();
-        //£££££‚±‚±‚Ü‚Å
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
 
-        //NFC‚ÌID‚ğæ“¾Bbyte”z—ñB
+        //NFCï¿½ï¿½IDï¿½ï¿½ï¿½æ“¾ï¿½Bbyteï¿½zï¿½ï¿½B
         byte[] rawId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
         String id = "nothing";
 
-        //String‚É•ÏŠ·‚µ‚Ä•\¦‚³‚¹‚Ä‚İ‚é
+        //Stringï¿½É•ÏŠï¿½ï¿½ï¿½ï¿½Ä•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚İ‚ï¿½
         id = bytesToString(rawId);
         Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
 
 
-        //¥NFC‚Ì’†g‚ğæ“¾‚·‚é
-        //NdefMessage‚ğParcelableŒ^‚Åæ“¾BNdefMessage‚ª•À—ñ‚Å‚¢‚­‚Â‚©‚ ‚éƒpƒ^[ƒ“‚ª‚ ‚éB
+        //ï¿½ï¿½NFCï¿½Ì’ï¿½ï¿½gï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
+        //NdefMessageï¿½ï¿½Parcelableï¿½^ï¿½Åæ“¾ï¿½BNdefMessageï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
         Parcelable[] rawMessage = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 
         if(rawMessage != null){
-            //ParcelableŒ^‚©‚çNdefMessageŒ^‚É“ü‚ê’¼‚·B
+            //Parcelableï¿½^ï¿½ï¿½ï¿½ï¿½NdefMessageï¿½^ï¿½É“ï¿½ï¿½ê’¼ï¿½ï¿½ï¿½B
             NdefMessage[] msgs = new NdefMessage[rawMessage.length];
             String str = "";
 
             for(int i=0; i<rawMessage.length; i++){
                 msgs[i] = (NdefMessage)rawMessage[i];
-                //NdefMessage‚ğNdefRecord‚Éƒoƒ‰‚·B
+                //NdefMessageï¿½ï¿½NdefRecordï¿½Éƒoï¿½ï¿½ï¿½ï¿½ï¿½B
                 for(NdefRecord record : msgs[i].getRecords()){
-                    //ƒf[ƒ^–{‘Ì‚ÌPayload•”‚ğæ‚èo‚·BƒoƒCƒg”z—ñB
+                    //ï¿½fï¿½[ï¿½^ï¿½{ï¿½Ì‚ï¿½Payloadï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½Bï¿½oï¿½Cï¿½gï¿½zï¿½ï¿½B
                     byte[] payload = record.getPayload();
                     for(byte data : payload){
-                        //•‰‚Ì’l‚ª“ü‚Á‚Ä‚éê‡‚ª‚ ‚é‚Ì‚Å"& 0xff"‚ğ‚Â‚¯‚é
+                        //ï¿½ï¿½ï¿½Ì’lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ê‡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½"& 0xff"ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½
                         str += String.format("%c", data & 0xff);
                     }
                 }
                 String FashionPath = GetFashionPath(str.substring(1));
+                //String FashionPath = GetFashionPath("enw");
                 str_key = FashionPath;
+                //str_key = Environment.getExternalStorageDirectory().getPath() + "/FashionCoordinator/tops/ShirtsNatural.JPG";
 
+                //ã“ã“ã§ç”»åƒã‚’è¡¨ç¤ºã™ã‚‹
                 Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
                 // Set initial data.
                 Log.i(LOG_TAG, "tops_tag: " + str);
                 Log.i(LOG_TAG, "tops_path1: " + str_key);
 
-
-
             }
+            Intent intentScandisplay = new Intent(getApplication(), FashionScanDisplay.class);
+            //ã€€ã‚¤ãƒ³ãƒ†ãƒ³ãƒˆã«å€¤ã‚’ã‚»ãƒƒãƒˆ
+            intentScandisplay.putExtra("keyword", str_key);
+            // Selectç”»é¢ã«é·ç§»ã™ã‚‹
+            startActivity(intentScandisplay);
+            //String FashionPath = GetFashionPath(str.substring(1));
+            Log.d(LOG_TAG, "ScanLastFashionPath : " + str_key);
+
         }
         else{
             Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_SHORT).show();
@@ -254,7 +251,7 @@ public class FashionScan extends Activity implements View.OnClickListener {
 
         // Get writable database
         db = hlpr.getWritableDatabase();
-        //‚±‚±‚Ü‚Å‚¨‚Ü‚¶‚È‚¢
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚Å‚ï¿½ï¿½Ü‚ï¿½ï¿½È‚ï¿½
 
         String FashionPath = hlpr.getTopsImagePathById(db, str);//test
         return FashionPath;
@@ -262,7 +259,7 @@ public class FashionScan extends Activity implements View.OnClickListener {
 
     }
 
-    //byte”z—ñ‚ğString‚É‚µ‚Ä•Ô‚·
+    //byteï¿½zï¿½ï¿½ï¿½Stringï¿½É‚ï¿½ï¿½Ä•Ô‚ï¿½
     public String bytesToString(byte[] bytes){
         StringBuilder buffer = new StringBuilder();
         boolean isFirst = true;
@@ -273,7 +270,7 @@ public class FashionScan extends Activity implements View.OnClickListener {
             } else {
                 buffer.append("-");
             }
-            //•‰‚Ìê‡‚ª‚ ‚é‚Ì‚Åu& 0xffv‚ğ‚Â‚¯‚éB
+            //ï¿½ï¿½ï¿½Ìê‡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Åu& 0xffï¿½vï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½B
             buffer.append(Integer.toString(b & 0xff));
         }
         return buffer.toString();
