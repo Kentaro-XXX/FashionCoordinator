@@ -55,6 +55,10 @@ public class WeatherManager extends AsyncTask<String, Void, String> {
         return ReceiveStr;
     }
     String weather = "";
+    String temperature = "";
+    String humidity = "";
+    String icon = "";
+
     @Override
     protected void onPostExecute(String result) {
 
@@ -62,22 +66,28 @@ public class WeatherManager extends AsyncTask<String, Void, String> {
         Log.d("weatherLOG", result);
         try {
             JSONObject json = new JSONObject(result);
-            weather = json.getString("clouds");
-            //weather = json.getJSONObject("weather").getString("description");
+            temperature = json.getJSONObject("main").getString("temp");
+            humidity = json.getJSONObject("main").getString("humidity");
+            weather = json.getJSONArray("weather").getJSONObject(0).getString("main");
+            icon = json.getJSONArray("weather").getJSONObject(0).getString("icon");
 
         }catch (JSONException e) {
             Log.d("weatherLOG", "exception");
             e.printStackTrace();
         }
         Log.d("weatherLOG", weather);
+        Log.d("weatherLOG", temperature);
+        Log.d("weatherLOG", humidity);
+        Log.d("weatherLOG", icon);
     }
 
     public WeatherData GetWeather() {
         WeatherData data= new WeatherData();
-        data.temperature = json.getJSONObject("main").getJSONObject("temp");
-        data.weather = json.getJSONArray("weather").getJSONObject(0).getString("main");
-        data.humidity = json.getJSONObject("main").getJSONObject("humidity");
-    	data.icon = json.getJSONArray("weather").getJSONObject(0).getString("icon");
+
+        data.temperature = temperature;
+        data.weather = weather;
+        data.humidity = humidity;
+    	data.icon = icon;
         return data;
     }
 
