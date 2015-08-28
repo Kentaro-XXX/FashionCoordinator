@@ -86,10 +86,10 @@ public class FashionSelect extends Activity {
         candidateIndexMax = 4;  //TODO
 
         // ボタン定義
-        final BootstrapButton buttonOK = (BootstrapButton) findViewById(R.id.button_select_ok);
+        BootstrapButton buttonOK = (BootstrapButton) findViewById(R.id.button_select_ok);
         BootstrapButton buttonNext = (BootstrapButton) findViewById(R.id.button_select_next);
         BootstrapButton buttonPrev = (BootstrapButton) findViewById(R.id.button_select_prev);
-        BootstrapCircleThumbnail buttonHome = (BootstrapCircleThumbnail) findViewById(R.id.button_select_home);
+        final BootstrapCircleThumbnail buttonHome = (BootstrapCircleThumbnail) findViewById(R.id.button_select_home);
 
         // OKボタンが押されたときの処理
         buttonOK.setOnClickListener(new View.OnClickListener() {
@@ -113,10 +113,10 @@ public class FashionSelect extends Activity {
                 popupWindow.setFocusable(true);
 
                 // 表示サイズの設定
-                float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 330, getResources().getDisplayMetrics());
-                popupWindow.setWindowLayoutMode((int) width, 200);
-                popupWindow.setWidth((int) width);
-                popupWindow.setHeight(500);
+               // float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 330, getResources().getDisplayMetrics());
+                popupWindow.setWindowLayoutMode(450, 250);
+                popupWindow.setWidth(450);
+                popupWindow.setHeight(250);
 
 
                 // popupのOKボタンの設定
@@ -136,7 +136,8 @@ public class FashionSelect extends Activity {
 
                 // 画面中央に表示
                 //popupWindow.showAtLocation(findViewById(R.id.button_popup), Gravity.CENTER, 0, 0);
-                popupWindow.showAsDropDown(buttonOK, -130, +100);
+               // popupWindow.showAsDropDown(buttonOK, -130, +100);
+               popupWindow.showAsDropDown(buttonHome, 110, 100);
 
             }
 
