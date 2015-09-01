@@ -93,6 +93,9 @@ public class FashionScan extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v){
         Intent intentScandisplay = new Intent(getApplication(), FashionScanDisplay.class);
+
+        str_key = Environment.getExternalStorageDirectory().getPath() + "/FashionCoordinator/tops/ShirtsNatural.JPG";   //temp
+
         //　インテントに値をセット
         intentScandisplay.putExtra("keyword", str_key);
         // Select画面に遷移する

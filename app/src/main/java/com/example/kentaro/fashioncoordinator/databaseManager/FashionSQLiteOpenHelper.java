@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
 /**
@@ -87,6 +88,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
             // Get tops data id from cursor variable.
             id = mCursor.getString(mCursor.getColumnIndex("_id"));
         }
+        mCursor.close();
         return id;
     }
     private String getBottomsImageIdByPath(SQLiteDatabase db, String path){
@@ -101,6 +103,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
             // Get bottoms data id from cursor variable.
             id = mCursor.getString(mCursor.getColumnIndex("_id"));
         }
+        mCursor.close();
         return id;
     }
 
@@ -116,6 +119,7 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
             // Get tops data path from cursor variable.
             path = mCursor.getString(mCursor.getColumnIndex("_imgData"));
         }
+        mCursor.close();
         return path;
     }
     public String getBottomsImagePathById(SQLiteDatabase db, String id){
@@ -130,8 +134,32 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
             // Get bottoms data path from cursor variable.
             path = mCursor.getString(mCursor.getColumnIndex("_imgData"));
         }
+        mCursor.close();
         return path;
     }
+    public String[] getBottomsIds(SQLiteDatabase db){
+        final String SELECT_IMAGE_PATH_FROM_BOTTOMS_IMAGE_TABLE =
+                "select _id from " + BOTTOMS_IMAGE_TABLE_NAME;
+//        String tempPath = Environment.getExternalStorageDirectory().getPath() + "/FashionCoordinator/bottoms/PantsBeige.JPG";
+//        final String SELECT_IMAGE_PATH_FROM_BOTTOMS_IMAGE_TABLE =
+  //              "select _id from " + BOTTOMS_IMAGE_TABLE_NAME + " where _imgData = \"" + tempPath + "\"";
+
+        // Get bottoms data path by id
+        Cursor mCursor = db.rawQuery(SELECT_IMAGE_PATH_FROM_BOTTOMS_IMAGE_TABLE, null);
+
+        boolean next = mCursor.moveToFirst();
+        String path[] = new String[mCursor.getCount()];
+        int i=0;
+        while(next){
+            // Get bottoms data path from cursor variable.
+            path[i++] = mCursor.getString(mCursor.getColumnIndex("_id"));
+            next = mCursor.moveToNext();
+        }
+        mCursor.close();
+        return path;
+    }
+
+
     public FashionWeatherHistoryData getFashionWeatherHistoryData(SQLiteDatabase db, String date){
         final String SELECT_IMAGE_IDS_FROM_HISTORY_TABLE =
                 "select _topsNfcId, _bottomsNfcId from " + HISTORY_TABLE_NAME + " where _date = \"" + date + "\"";
@@ -167,9 +195,11 @@ public class FashionSQLiteOpenHelper extends SQLiteOpenHelper {
             // Get humidity
             String humidity = mCursor.getString(mCursor.getColumnIndex("_humidity"));
             mFashionWeatherHistoryData.humidity = humidity;
+            mCursor.close();
 
             return mFashionWeatherHistoryData;
         }else{
+            mCursor.close();
             Log.d(LOG_TAG, "[getFashionWeatherHistoryData] No History Data!");
             return null;
         }

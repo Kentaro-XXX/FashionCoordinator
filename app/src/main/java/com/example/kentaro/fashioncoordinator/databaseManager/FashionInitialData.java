@@ -77,7 +77,7 @@ public class FashionInitialData {
         }
         for (String path : DEFAULT_BOTTOMS_DATA.keySet()){
             String absolutePath = externalStorageDir + "/" + path;
-            hlpr.setTopsImage(db, absolutePath, DEFAULT_BOTTOMS_DATA.get(path));
+            hlpr.setBottomsImage(db, absolutePath, DEFAULT_BOTTOMS_DATA.get(path));
 
             Log.i(LOG_TAG, "id: " + DEFAULT_BOTTOMS_DATA.get(path));
             File imgFile = new File(absolutePath);

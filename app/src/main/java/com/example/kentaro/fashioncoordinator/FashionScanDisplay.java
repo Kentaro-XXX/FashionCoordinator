@@ -31,7 +31,7 @@ public class FashionScanDisplay extends Activity implements View.OnClickListener
         // 受け取ったインテントを取得
         Intent intent = getIntent();
         // インテントに保存されたデータを取得
-        String str_key = intent.getStringExtra("keyword");
+        str_key = intent.getStringExtra("keyword");
         //表示してみる
         Toast.makeText(getApplicationContext(), str_key, Toast.LENGTH_SHORT).show();
 
