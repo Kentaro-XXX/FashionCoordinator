@@ -75,69 +75,69 @@ public class FashionSelect extends Activity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.fashion_select);
 
-        // ƒCƒ“ƒeƒ“ƒg‚ğæ“¾
+        // ï¿½Cï¿½ï¿½ï¿½eï¿½ï¿½ï¿½gï¿½ï¿½ï¿½æ“¾
         Intent intent = getIntent();
-        // ƒCƒ“ƒeƒ“ƒg‚É•Û‘¶‚³‚ê‚½ƒf[ƒ^‚ğæ“¾
+        // ï¿½Cï¿½ï¿½ï¿½eï¿½ï¿½ï¿½gï¿½É•Û‘ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾
         String data = intent.getStringExtra("keyword");
-        //•\¦‚µ‚Ä‚İ‚é
+        //ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚İ‚ï¿½
         Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT).show();
         // Initialize candidateIndex
         candidateIndex = 0;
         candidateIndexMax = 4;  //TODO
 
-        // ƒ{ƒ^ƒ“’è‹`
+        // ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½`
         BootstrapButton buttonOK = (BootstrapButton) findViewById(R.id.button_select_ok);
         BootstrapButton buttonNext = (BootstrapButton) findViewById(R.id.button_select_next);
         BootstrapButton buttonPrev = (BootstrapButton) findViewById(R.id.button_select_prev);
         final BootstrapCircleThumbnail buttonHome = (BootstrapCircleThumbnail) findViewById(R.id.button_select_home);
 
-        // OKƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+        // OKï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½Æ‚ï¿½ï¿½Ìï¿½ï¿½ï¿½
         buttonOK.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                // popup‚ÌƒŒƒCƒAƒEƒgİ’è
+                // popupï¿½Ìƒï¿½ï¿½Cï¿½Aï¿½Eï¿½gï¿½İ’ï¿½
                 LayoutInflater layoutInflater
                         = (LayoutInflater) getBaseContext()
                         .getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = layoutInflater.inflate(R.layout.fashion_popup, null);
 
-                // popup‚ÌƒŒƒCƒAƒEƒgİ’è
+                // popupï¿½Ìƒï¿½ï¿½Cï¿½Aï¿½Eï¿½gï¿½İ’ï¿½
                 final PopupWindow popupWindow = new PopupWindow(popupView,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
 
 
-                // ƒ^ƒbƒv‚Ì‘¼‚ÌView‚ÅƒLƒƒƒbƒ`‚³‚ê‚È‚¢‚½‚ß‚Ìİ’è
+                // ï¿½^ï¿½bï¿½vï¿½ï¿½ï¿½Ì‘ï¿½ï¿½ï¿½Viewï¿½ÅƒLï¿½ï¿½ï¿½bï¿½`ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ß‚Ìİ’ï¿½
                 popupWindow.setOutsideTouchable(true);
                 popupWindow.setFocusable(true);
 
-                // •\¦ƒTƒCƒY‚Ìİ’è
+                // ï¿½\ï¿½ï¿½ï¿½Tï¿½Cï¿½Yï¿½Ìİ’ï¿½
                // float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 330, getResources().getDisplayMetrics());
-                popupWindow.setWindowLayoutMode(450, 250);
-                popupWindow.setWidth(450);
-                popupWindow.setHeight(250);
+                popupWindow.setWindowLayoutMode(700, 400);
+                popupWindow.setWidth(700);
+                popupWindow.setHeight(400);
 
 
-                // popup‚ÌOKƒ{ƒ^ƒ“‚Ìİ’è
+                // popupï¿½ï¿½OKï¿½{ï¿½^ï¿½ï¿½ï¿½Ìİ’ï¿½
                 Button btnPopupOK = (Button) popupView.findViewById(R.id.button_popup);
                 btnPopupOK.setOnClickListener(new Button.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        // ‘I‘ğ‚µ‚½î•ñ‚ğSave‚·‚é
+                        // ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Saveï¿½ï¿½ï¿½ï¿½
 
-                        // Start(Home)‰æ–Ê‚É‘JˆÚ‚·‚é
+                        // Start(Home)ï¿½ï¿½Ê‚É‘Jï¿½Ú‚ï¿½ï¿½ï¿½
                         Intent intentStart = new Intent(getApplication(), FashionStart.class);
                         startActivity(intentStart);
 
                     }
                 });
 
-                // ‰æ–Ê’†‰›‚É•\¦
+                // ï¿½ï¿½Ê’ï¿½ï¿½ï¿½ï¿½É•\ï¿½ï¿½
                 //popupWindow.showAtLocation(findViewById(R.id.button_popup), Gravity.CENTER, 0, 0);
                // popupWindow.showAsDropDown(buttonOK, -130, +100);
-               popupWindow.showAsDropDown(buttonHome, 110, 100);
+               popupWindow.showAsDropDown(buttonHome, 170, 700);
 
             }
 
@@ -145,32 +145,32 @@ public class FashionSelect extends Activity {
 
 
 
-        // Nextƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+        // Nextï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½Æ‚ï¿½ï¿½Ìï¿½ï¿½ï¿½
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Ÿ‚Ì•‚ğ•\¦‚·‚é
+                // ï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 next();
             }
         });
 
-        // Prevƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+        // Prevï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½Æ‚ï¿½ï¿½Ìï¿½ï¿½ï¿½
         buttonPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // ‘O‚Ì•‚ğ•\¦‚·‚é
+                // ï¿½Oï¿½Ì•ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 prev();
             }
         });
 
-        // Homeƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+        // Homeï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½Æ‚ï¿½ï¿½Ìï¿½ï¿½ï¿½
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Start‰æ–Ê‚Ö‚Ì‘JˆÚ‚ğw’è
+                // Startï¿½ï¿½Ê‚Ö‚Ì‘Jï¿½Ú‚ï¿½ï¿½wï¿½ï¿½
                 Intent intentStart = new Intent(getApplication(), FashionStart.class);
 
-                // save‰æ–Ê‚Ö‘JˆÚ
+                // saveï¿½ï¿½Ê‚Ö‘Jï¿½ï¿½
                 startActivity(intentStart);
             }
         });
@@ -191,7 +191,7 @@ public class FashionSelect extends Activity {
 
         // TODO
         // Dummy
-        // getFashionCoordinate(candidateIndex); ƒR[ƒfƒBƒl[ƒg‚ğo—Í‚·‚éAPI‚Æ’uŠ·‚·‚éB
+        // getFashionCoordinate(candidateIndex); ï¿½Rï¿½[ï¿½fï¿½Bï¿½lï¿½[ï¿½gï¿½ï¿½ï¿½oï¿½Í‚ï¿½ï¿½ï¿½APIï¿½Æ’uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
         DummyFashionPath dummyFashionPath = new DummyFashionPath();
         String topsPath    = Environment.getExternalStorageDirectory().getPath() + dummyFashionPath.getDummyTopsPath(candidateIndex);
         String bottomsPath = Environment.getExternalStorageDirectory().getPath() + dummyFashionPath.getDummyBottomsPath(candidateIndex);
@@ -214,7 +214,7 @@ public class FashionSelect extends Activity {
         // Get next fashion candidate image path.
         // TODO
         // Dummy
-        // getFashionCoordinate(candidateIndex); ƒR[ƒfƒBƒl[ƒg‚ğo—Í‚·‚éAPI‚Æ’uŠ·‚·‚éB
+        // getFashionCoordinate(candidateIndex); ï¿½Rï¿½[ï¿½fï¿½Bï¿½lï¿½[ï¿½gï¿½ï¿½ï¿½oï¿½Í‚ï¿½ï¿½ï¿½APIï¿½Æ’uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
         DummyFashionPath dummyFashionPath = new DummyFashionPath();
         String topsPath    = Environment.getExternalStorageDirectory().getPath() + dummyFashionPath.getDummyTopsPath(candidateIndex);
         String bottomsPath = Environment.getExternalStorageDirectory().getPath() + dummyFashionPath.getDummyBottomsPath(candidateIndex);
@@ -238,7 +238,7 @@ public class FashionSelect extends Activity {
         // Get next fashion candidate image path.
         // TODO
         // Dummy
-        // getFashionCoordinate(candidateIndex); ƒR[ƒfƒBƒl[ƒg‚ğo—Í‚·‚éAPI‚Æ’uŠ·‚·‚éB
+        // getFashionCoordinate(candidateIndex); ï¿½Rï¿½[ï¿½fï¿½Bï¿½lï¿½[ï¿½gï¿½ï¿½ï¿½oï¿½Í‚ï¿½ï¿½ï¿½APIï¿½Æ’uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
         DummyFashionPath dummyFashionPath = new DummyFashionPath();
         String topsPath    = Environment.getExternalStorageDirectory().getPath() + dummyFashionPath.getDummyTopsPath(candidateIndex);
         String bottomsPath = Environment.getExternalStorageDirectory().getPath() + dummyFashionPath.getDummyBottomsPath(candidateIndex);

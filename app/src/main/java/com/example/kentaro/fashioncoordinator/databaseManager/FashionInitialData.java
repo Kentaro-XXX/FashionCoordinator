@@ -34,7 +34,7 @@ public class FashionInitialData {
         static {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("FashionCoordinator/bottoms/PantsBeige.JPG",    "B_Beige1");
-            map.put("FashionCoordinator/bottoms/PantsBlack.JPG",    "B_Black1");
+            map.put("FashionCoordinator/bottoms/PantsBlack.JPG",    "enB_Black1");
             map.put("FashionCoordinator/bottoms/PantsGray.JPG",     "B_Gray1");
             map.put("FashionCoordinator/bottoms/PantsGray2.JPG",    "B_Gray2");
             map.put("FashionCoordinator/bottoms/PantsGreen2.JPG",   "B_Green1");
